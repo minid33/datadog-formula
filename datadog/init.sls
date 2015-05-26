@@ -44,6 +44,7 @@ datadog-agent-service:
     - enable: True
     - watch:
       - pkg: datadog-agent
+      - file: datadog-tags
 
 {% if pillar['datadog'].tags is defined %}
 datadog-tags:
