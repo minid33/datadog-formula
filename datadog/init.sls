@@ -49,10 +49,11 @@ datadog-agent-service:
 datadog-tags:
   file.sed:
     - name: /etc/dd-agent/datadog.conf
-    - before: "tags:.*"
+    - before: "^#tags:.*"
     - after: "tags: {{pillar['datadog']['tags']}}"
     - watch:
       - pkg.latest: datadog-pkg
     - require:
       - cmd.run: datadog-example
 {% endif %}
+
