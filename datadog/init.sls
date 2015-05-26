@@ -43,3 +43,15 @@ datadog-agent-service:
     - enable: True
     - watch:
       - pkg: datadog-agent
+
+{% if pillar['datadog'].tags is defined %}
+datadog-tags:
+  file.sed:
+    - name: /etc/dd-agent/datadog.conf
+    - before: "tags:.*"
+    - after: "tags: {{pillar['datadog']['tags']}}"
+    - watch:
+      - pkg.latest: datadog-pkg
+    - require:
+      - cmd.run: datadog-example
+{% endif %}
